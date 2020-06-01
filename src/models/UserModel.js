@@ -11,6 +11,10 @@ class UserModel extends Model{
             tableName: 'users'
         })
     }
+
+    static associate(models){
+        this.hasMany(models.DataUserModel, { foreignKey: 'user_id', as: 'data_users' })
+    }
 }
 
 module.exports = UserModel

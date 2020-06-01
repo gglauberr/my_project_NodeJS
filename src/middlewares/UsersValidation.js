@@ -11,7 +11,7 @@ const UserValidation = async (req, res, next) => {
 
     if(!password) return res.status(400).json({ error: 'O password é obrigatório' })
     
-    if((ativo === undefined) || (ativo === undefined)) 
+    if((ativo === null) || (ativo === undefined)) 
         return res.status(400).json({ error: 'O ativo é obrigatório' })
 
     let exists
