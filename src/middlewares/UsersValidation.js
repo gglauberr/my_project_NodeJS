@@ -29,7 +29,6 @@ const UserValidation = async (req, res, next) => {
                 login: { [Op.eq] : login } 
             }
         })
-        console.log(exists)
     }
 
     if(exists) return res.status(400).json({ error: 'O usuário já existe' })

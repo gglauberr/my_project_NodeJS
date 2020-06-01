@@ -4,6 +4,7 @@ require('./data')
 
 const UserRoutes = require('./routes/UserRoutes')
 const DataUserRoutes = require('./routes/DataUserRoutes')
+const ClientRoutes = require('./routes/ClientRoutes')
 
 const app = express()
 
@@ -13,5 +14,6 @@ app.use(express.json())
 
 app.use('/users', UserRoutes)
 app.use('/data_users', DataUserRoutes)
+app.use('/clients', ClientRoutes)
 
 app.listen(3333)
