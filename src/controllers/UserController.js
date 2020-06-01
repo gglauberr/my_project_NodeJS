@@ -55,9 +55,12 @@ module.exports = {
 
     async update(req, res){
         const { id } = req.params
+        const user_login = req.user.login
         const { login, password, ativo } = req.body
-        const user = await UserModel.findByPk(id)
+        const user = await UserModel.findByPk(id)      
         if(!user) return res.status(400).json({ error: 'Usuário não encontrado' })
+        if(user_login !== user.login) return res.status(400).json({ error: 'Operação não permitida' })
+
         const salt = await bcrypt.genSalt(10)
         const passhash = await bcrypt.hash(password, salt)
         await user
@@ -76,8 +79,10 @@ module.exports = {
 
     async delete(req, res){
         const { id } = req.params
+        const user_login = req.user.login
         const user = await UserModel.findByPk(id)
         if(!user) return res.status(400).json({ error: 'Usuário não encontrado' })
+        if(user_login !== user.login) return res.status(400).json({ error: 'Operação não permitida' })
         await user
             .destroy()
             .then(response => {

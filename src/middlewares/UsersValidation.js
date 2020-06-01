@@ -10,7 +10,9 @@ const UserValidation = async (req, res, next) => {
     if(!regex.test(login)) return res.status(400).json({ error: 'O email não é válido' })
 
     if(!password) return res.status(400).json({ error: 'O password é obrigatório' })
-    if(!ativo) return res.status(400).json({ error: 'O ativo é obrigatório' })
+    
+    if((ativo === undefined) || (ativo === undefined)) 
+        return res.status(400).json({ error: 'O ativo é obrigatório' })
 
     let exists
 
