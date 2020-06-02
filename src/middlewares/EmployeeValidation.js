@@ -1,7 +1,7 @@
 const { Op } = require('sequelize')
-const PrividerModel = require('../models/ProviderModel')
+const EmployeeModel = require('../models/EmployeeModel')
 
-const ProviderValidation = async (req, res, next) => {
+const EmployeeValidation = async (req, res, next) => {
 
     const { nome, celular, ativo } = req.body
 
@@ -12,7 +12,7 @@ const ProviderValidation = async (req, res, next) => {
         return res.status(400).json({ error: 'O ativo é obrigatório' })
 
     if (req.params.id) {
-        exists = await PrividerModel.findOne({
+        exists = await EmployeeModel.findOne({
             where: {
                 id: { [Op.ne]: req.params.id },
                 nome: { [Op.eq]: nome },
@@ -21,7 +21,7 @@ const ProviderValidation = async (req, res, next) => {
             }
         })
     } else {
-        exists = await PrividerModel.findOne({
+        exists = await EmployeeModel.findOne({
             where: {
                 nome: { [Op.eq]: nome },
                 celular: { [Op.eq]: celular },
@@ -30,10 +30,10 @@ const ProviderValidation = async (req, res, next) => {
         })
     }
 
-    if (exists) return res.status(400).json({ error: 'O fornecedor já existe' })
+    if (exists) return res.status(400).json({ error: 'O funcionário já existe' })
 
     next()
 
 }
 
-module.exports = ProviderValidation
+module.exports = EmployeeValidation

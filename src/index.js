@@ -6,6 +6,7 @@ const UserRoutes = require('./routes/UserRoutes')
 const DataUserRoutes = require('./routes/DataUserRoutes')
 const ClientRoutes = require('./routes/ClientRoutes')
 const ProviderRoutes = require('./routes/ProviderRoutes')
+const EmployeeRoutes = require('./routes/EmployeeRoutes')
 
 const app = express()
 
@@ -17,5 +18,6 @@ app.use('/users', UserRoutes)
 app.use('/data_users', DataUserRoutes)
 app.use('/clients', ClientRoutes)
 app.use('/providers', ProviderRoutes)
+app.use('/employees', EmployeeRoutes)
 
 app.listen(3333)
