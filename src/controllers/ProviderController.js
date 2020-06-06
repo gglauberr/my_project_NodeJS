@@ -19,6 +19,19 @@ module.exports = {
                     ativo: {
                         [Op.eq]: true
                     }
+                },
+                include: {
+                    association: 'categories',
+                    required: false,
+                    attributes: ['id', 'nome'],
+                    through: {
+                        attributes: []
+                    },
+                    where: {
+                        ativo: {
+                            [Op.eq]: true
+                        }
+                    }
                 }
             })
 
@@ -32,26 +45,32 @@ module.exports = {
     },
 
     async store(req, res) {
-        const user_id = req.user.id
+        try {
+            const user_id = req.user.id
 
-        const { nome, telefone, celular, logradouro, numero, complemento,
-            cep, bairro, cidade, estado, email, site, facebook, instagram, ativo } = req.body
+            const { nome, telefone, celular, logradouro, numero, complemento,
+                cep, bairro, cidade, estado, email, ativo, categorias } = req.body
 
-        const user = await UserModel.findByPk(user_id)
-        if (!user) return res.status(400).json({ error: 'usuário não encontrado' })
+            const user = await UserModel.findByPk(user_id)
+            if (!user) return res.status(400).json({ error: 'usuário não encontrado' })
 
+            if (categorias.length === 0) {
+                return res.status(400).json({ error: 'A categoria não foi informada' })
+            }
 
-        await ProviderModel
-            .create({
-                nome, telefone, celular, logradouro, numero, complemento,
-                cep, bairro, cidade, estado, email, site, facebook, instagram, ativo, user_id
-            })
-            .then(response => {
-                return res.status(200).json(response)
-            })
-            .catch(error => {
-                return res.status(500).json(error)
-            })
+            const provider = await ProviderModel
+                .create({
+                    nome, telefone, celular, logradouro, numero, complemento,
+                    cep, bairro, cidade, estado, email, ativo, user_id
+                })
+
+            provider.setCategories(categorias)
+
+            return res.status(200).json(provider)
+
+        } catch (error) {
+            return res.status(500).json(error)
+        }
     },
 
     async show(req, res) {
@@ -73,6 +92,19 @@ module.exports = {
                     ativo: {
                         [Op.eq]: true
                     }
+                },
+                include: {
+                    association: 'categories',
+                    required: false,
+                    attributes: ['id', 'nome'],
+                    through: {
+                        attributes: []
+                    },
+                    where: {
+                        ativo: {
+                            [Op.eq]: true
+                        }
+                    }
                 }
             })
 
@@ -86,43 +118,50 @@ module.exports = {
     },
 
     async update(req, res) {
-        const user_id = req.user.id
+        try {
+            const user_id = req.user.id
 
-        const id = req.params.id
+            const id = req.params.id
 
-        const { nome, telefone, celular, logradouro, numero, complemento,
-            cep, bairro, cidade, estado, email, site, facebook, instagram, ativo } = req.body
+            const { nome, telefone, celular, logradouro, numero, complemento,
+                cep, bairro, cidade, estado, email, site, facebook, instagram, ativo, categorias } = req.body
 
-        const user = await UserModel.findByPk(user_id)
-        if (!user) return res.status(400).json({ error: 'usuário não encontrado' })
+            const user = await UserModel.findByPk(user_id)
+            if (!user) return res.status(400).json({ error: 'usuário não encontrado' })
 
-        const provider = await ProviderModel.findOne({
-            where: {
-                user_id: {
-                    [Op.eq]: user_id
-                },
-                id: {
-                    [Op.eq]: id
-                },
-                ativo: {
-                    [Op.eq]: true
-                }
+            if (categorias.length === 0) {
+                return res.status(400).json({ error: 'A categoria não foi informada' })
             }
-        })
 
-        if (!provider) return res.status(400).json({ error: 'fornecedor não encontrado' })
+            const provider = await ProviderModel.findOne({
+                where: {
+                    user_id: {
+                        [Op.eq]: user_id
+                    },
+                    id: {
+                        [Op.eq]: id
+                    },
+                    ativo: {
+                        [Op.eq]: true
+                    }
+                }
+            })
 
-        await provider
-            .update({
-                nome, telefone, celular, logradouro, numero, complemento,
-                cep, bairro, cidade, estado, email, site, facebook, instagram, ativo, user_id
-            })
-            .then(response => {
-                return res.status(200).json(response)
-            })
-            .catch(error => {
-                return res.status(500).json(error)
-            })
+            if (!provider) return res.status(400).json({ error: 'fornecedor não encontrado' })
+
+            await provider
+                .update({
+                    nome, telefone, celular, logradouro, numero, complemento,
+                    cep, bairro, cidade, estado, email, site, facebook, instagram, ativo, user_id
+                })
+
+            provider.setCategories(categorias)
+
+            return res.status(200).json(provider)
+
+        } catch (error) {
+            return res.status(500).json(error)
+        }
     },
 
     async delete(req, res) {

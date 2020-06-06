@@ -26,6 +26,7 @@ class ProviderModel extends Model{
 
     static associate(models){
         this.belongsTo(models.UserModel, { foreignKey: 'user_id', as: 'user' })
+        this.belongsToMany(models.CategoryModel, { foreignKey: 'provider_id', through: 'supplier_categories', as: 'categories' })
     }
 }
 
