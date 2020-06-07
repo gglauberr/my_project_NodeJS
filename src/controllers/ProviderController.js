@@ -35,7 +35,7 @@ module.exports = {
                 }
             })
 
-            if (!provider) return res.status(400).json({ error: 'dados do usuário não encontrado' })
+            if (!provider) return res.status(400).json({ error: 'fornecedor não encontrado' })
 
             return res.status(200).json(provider)
 

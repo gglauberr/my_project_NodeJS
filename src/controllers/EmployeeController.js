@@ -22,7 +22,7 @@ module.exports = {
                 }
             })
 
-            if (!employee) return res.status(400).json({ error: 'dados do usuário não encontrado' })
+            if (!employee) return res.status(400).json({ error: 'funcionário não encontrado' })
 
             return res.status(200).json(employee)
 

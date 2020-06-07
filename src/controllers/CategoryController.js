@@ -22,7 +22,7 @@ module.exports = {
                 }
             })
 
-            if (!category) return res.status(400).json({ error: 'dados do usuário não encontrado' })
+            if (!category) return res.status(400).json({ error: 'categoria não encontrada' })
 
             return res.status(200).json(category)
 
