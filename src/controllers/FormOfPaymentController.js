@@ -1,6 +1,6 @@
 const { Op } = require('sequelize')
 const UserModel = require('../models/UserModel')
-const StatusModel = require('../models/StatusModel')
+const FormOfPaymentModel = require('../models/FormOfPaymentModel')
 
 module.exports = {
 
@@ -11,7 +11,7 @@ module.exports = {
             const user = await UserModel.findByPk(user_id)
             if (!user) return res.status(400).json({ error: 'usuário não encontrado' })
 
-            const status = await StatusModel.findAll({
+            const formOfPayment = await FormOfPaymentModel.findAll({
                 where: {
                     user_id: {
                         [Op.eq]: user_id
@@ -22,9 +22,9 @@ module.exports = {
                 }
             })
 
-            if (!status) return res.status(400).json({ error: 'status não encontrado' })
+            if (!formOfPayment) return res.status(400).json({ error: 'Forma de pagamento não encontrada' })
 
-            return res.status(200).json(status)
+            return res.status(200).json(formOfPayment)
 
         } catch (error) {
             return res.status(500).json(error)
@@ -34,14 +34,15 @@ module.exports = {
     async store(req, res) {
         const user_id = req.user.id
 
-        const { nome, assunto, ativo } = req.body
+        const { nome, ativo } = req.body
 
         const user = await UserModel.findByPk(user_id)
         if (!user) return res.status(400).json({ error: 'usuário não encontrado' })
 
-        await StatusModel
+
+        await FormOfPaymentModel
             .create({
-                nome, assunto, ativo, user_id
+                nome, ativo, user_id
             })
             .then(response => {
                 return res.status(200).json(response)
@@ -59,7 +60,7 @@ module.exports = {
             const user = await UserModel.findByPk(user_id)
             if (!user) return res.status(400).json({ error: 'usuário não encontrado' })
 
-            const status = await StatusModel.findOne({
+            const formOfPayment = await FormOfPaymentModel.findOne({
                 where: {
                     user_id: {
                         [Op.eq]: user_id
@@ -73,9 +74,9 @@ module.exports = {
                 }
             })
 
-            if (!status) return res.status(400).json({ error: 'status não encontrado' })
+            if (!formOfPayment) return res.status(400).json({ error: 'Forma de pagamento não encontrada' })
 
-            return res.status(200).json(status)
+            return res.status(200).json(formOfPayment)
 
         } catch (error) {
             return res.status(500).json(error)
@@ -87,12 +88,13 @@ module.exports = {
 
         const id = req.params.id
 
-        const { nome, assunto, ativo } = req.body
+        const { nome, telefone, celular, logradouro, numero, complemento,
+            cep, bairro, cidade, estado, email, ativo } = req.body
 
         const user = await UserModel.findByPk(user_id)
         if (!user) return res.status(400).json({ error: 'usuário não encontrado' })
 
-        const status = await StatusModel.findOne({
+        const formOfPayment = await FormOfPaymentModel.findOne({
             where: {
                 user_id: {
                     [Op.eq]: user_id
@@ -106,11 +108,12 @@ module.exports = {
             }
         })
 
-        if (!status) return res.status(400).json({ error: 'status não encontrado' })
+        if (!formOfPayment) return res.status(400).json({ error: 'Forma de pagamento não encontrada' })
 
-        await status
+        await formOfPayment
             .update({
-                nome, assunto, ativo, user_id
+                nome, telefone, celular, logradouro, numero, complemento,
+                cep, bairro, cidade, estado, email, ativo, user_id
             })
             .then(response => {
                 return res.status(200).json(response)
@@ -128,7 +131,7 @@ module.exports = {
         const user = await UserModel.findByPk(user_id)
         if (!user) return res.status(400).json({ error: 'usuário não encontrado' })
 
-        const status = await StatusModel.findOne({
+        const formOfPayment = await FormOfPaymentModel.findOne({
             where: {
                 user_id: {
                     [Op.eq]: user_id
@@ -142,9 +145,9 @@ module.exports = {
             }
         })
 
-        if (!status) return res.status(400).json({ error: 'status não encontrado' })
+        if (!formOfPayment) return res.status(400).json({ error: 'Forma de pagamento não encontrada' })
 
-        await status
+        await formOfPayment
             .update({ ativo: false })
             .then(response => {
                 return res.status(200).json(response)
