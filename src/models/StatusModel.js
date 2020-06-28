@@ -14,6 +14,7 @@ class StatusModel extends Model{
 
     static associate(models){
         this.belongsTo(models.UserModel, { foreignKey: 'user_id', as: 'user' })
+        this.hasMany(models.OrderOfServiceModel, { foreignKey: 'status_id', as: 'order_of_services' })
     }
 }
 

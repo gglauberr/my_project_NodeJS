@@ -23,6 +23,7 @@ class ClientModel extends Model{
 
     static associate(models){
         this.belongsTo(models.UserModel, { foreignKey: 'user_id', as: 'user' })
+        this.hasMany(models.OrderOfServiceModel, { foreignKey: 'client_id', as: 'order_of_services' })
     }
 }
 

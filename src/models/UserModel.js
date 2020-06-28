@@ -20,6 +20,7 @@ class UserModel extends Model{
         this.hasMany(models.CategoryModel, { foreignKey: 'user_id', as: 'categories' })
         this.hasMany(models.StatusModel, { foreignKey: 'user_id', as: 'status' })
         this.hasMany(models.FormOfPaymentModel, { foreignKey: 'user_id', as: 'form_of_payments' })
+        this.hasMany(models.OrderOfServiceModel, { foreignKey: 'user_id', as: 'order_of_services' })
     }
 }
 

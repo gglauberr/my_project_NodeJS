@@ -10,6 +10,7 @@ const EmployeeRoutes = require('./routes/EmployeeRoutes')
 const CategoryRoutes = require('./routes/CategoryRoutes')
 const StatusRoutes = require('./routes/StatusRoutes')
 const FormOfPaymentRoutes = require('./routes/FormOfPaymentRoutes')
+const OrderOfServiceRoutes = require('./routes/OrderOfServiceRoutes')
 
 const app = express()
 
@@ -25,5 +26,6 @@ app.use('/employees', EmployeeRoutes)
 app.use('/categories', CategoryRoutes)
 app.use('/status', StatusRoutes)
 app.use('/form_of_payments', FormOfPaymentRoutes)
+app.use('/order_of_services', OrderOfServiceRoutes)
 
 app.listen(3333)

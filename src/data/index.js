@@ -9,6 +9,7 @@ const EmployeeModel = require('../models/EmployeeModel')
 const CategoryModel = require('../models/CategoryModel')
 const StatusModel = require('../models/StatusModel')
 const FormOfPaymentModel = require('../models/FormOfPaymentModel')
+const OrderOfServiceModel = require('../models/OrderOfServiceModel')
 
 const connection = new Sequelize(dbConfig)
 
@@ -20,6 +21,7 @@ EmployeeModel.init(connection)
 CategoryModel.init(connection)
 StatusModel.init(connection)
 FormOfPaymentModel.init(connection)
+OrderOfServiceModel.init(connection)
 
 UserModel.associate(connection.models)
 DataUserModel.associate(connection.models)
@@ -29,5 +31,6 @@ EmployeeModel.associate(connection.models)
 CategoryModel.associate(connection.models)
 StatusModel.associate(connection.models)
 FormOfPaymentModel.associate(connection.models)
+OrderOfServiceModel.associate(connection.models)
 
 module.exports = connection

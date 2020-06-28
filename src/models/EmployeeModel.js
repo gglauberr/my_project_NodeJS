@@ -22,7 +22,7 @@ class EmployeeModel extends Model{
     }
 
     static associate(models){
-        this.belongsTo(models.UserModel, { foreignKey: 'user_id', as: 'user' })
+        this.belongsTo(models.UserModel, { foreignKey: 'user_id', as: 'users' })
     }
 }
 
